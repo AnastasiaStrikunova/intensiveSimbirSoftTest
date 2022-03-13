@@ -1,0 +1,51 @@
+databaseChangeLog:
+  - changeSet:
+      id: 000000-create-sequences
+      author: Strikunova Anastasia
+      changes:
+        - createSequence:
+            cycle: false
+            sequenceName: seq_note
+            startValue: 1
+            dataType: bigint
+        - createSequence:
+            cycle: false
+            sequenceName: seq_user
+            startValue: 1
+            dataType: bigint
+
+  - changeSet:
+      id: 000000-create-tables
+      author: Strikunova Anastasia
+      changes:
+        - createTable:
+            tableName: note
+            columns:
+              - column: { name: id_note, type: BIGINT }
+              - column: { name: text, type: VARCHAR }
+              - column: { name: creation_date, type: TIMESTAMP WITH TIME ZONE, defaultValueComputed: now() }
+              - column: { name: id_user, type: BIGINT }
+        - createTable:
+            tableName: users
+            columns:
+              - column: { name: id_user, type: BIGINT }
+              - column: { name: email, type: VARCHAR }
+              - column: { name: password, type: VARCHAR }
+
+  - changeSet:
+      id: 000000-add-keys
+      author: Strikunova Anastasia
+      changes:
+        - addPrimaryKey: { columnNames: id_note, constraintName: pk_note, tableName: note }
+        - addPrimaryKey: { columnNames: id_user, constraintName: pk_user, tableName: users }
+        - addForeignKeyConstraint:
+            baseColumnNames: id_user
+            baseTableName: note
+            constraintName: fk_note_0
+            deferrable: true
+            initiallyDeferred: true
+            onDelete: CASCADE
+            onUpdate: RESTRICT
+            referencedColumnNames: id_user
+            referencedTableName: users
+            referencedTableSchemaName: public

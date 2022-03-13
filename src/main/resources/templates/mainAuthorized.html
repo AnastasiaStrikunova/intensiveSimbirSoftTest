@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Main page</title>
+</head>
+<body onload="sendJSON()">
+<div class="main">
+    <div class="menu">
+        <h2>Меню</h2>
+        <ul>
+            <li><a href="/api/v1/mainAuthorized">На главную</a></li>
+            <li><a href="/api/v1/listOfNotes">Список заметок</a></li>
+            <li><a href="/api/v1/addNote">Добавить заметку</a></li>
+
+            <li><form action="/api/v1/logout" method="POST">
+                <button type="submit">Выйти</button>
+            </form></li>
+
+        </ul>
+    </div>
+    <div class="content">
+        <h2>Общее количество сохраненных пользователем заметок:</h2>
+        <p class="result"></p>
+        <script>
+            function sendJSON() {
+                let result = document.querySelector('.result');
+                let xhr = new XMLHttpRequest();
+                let url = "/api/v1/note/number";
+                xhr.open("GET", url, true);
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState === 4 && xhr.status ===200) {
+                        result.innerHTML = this.responseText;
+                    }
+                }
+                xhr.send();
+            }
+        </script>
+    </div>
+</div>
+</body>
+</html>

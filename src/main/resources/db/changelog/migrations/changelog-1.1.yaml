@@ -1,0 +1,9 @@
+databaseChangeLog:
+  - changeSet:
+      id: 000001-add-column
+      author: Strikunova Anastasia
+      changes:
+        - addColumn:
+            tableName: users
+            columns:
+              - column: { name: role, type: VARCHAR }

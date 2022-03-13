@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <title>Registration</title>
+</head>
+<body>
+<div class="main">
+    <div class="menu">
+        <h2>Меню</h2>
+        <ul>
+            <li><a href="/api/v1/mainUnauthorized">На главную</a></li>
+            <li><a href="/api/v1/authorization">Авторизация</a></li>
+            <li><a href="/api/v1/registration">Регистрация</a></li>
+        </ul>
+    </div>
+    <div class="content">
+        <p>
+            <label>email: </label>
+            <input type="text" id="email"><br/>
+            <label>пароль: </label>
+            <input type="text" id="password"><br/>
+            <label>повтор пароля: </label>
+            <input type="text" id="repeatPassword"><br/>
+            <button onclick="sendJSON()">Зарегистрироваться</button>
+        <p class="result" style="color:blue"></p>
+        </p>
+        <script>
+            function sendJSON() {
+                let email = document.querySelector('#email');
+                let password = document.querySelector('#password');
+                let repeatPassword = document.querySelector('#repeatPassword');
+                let result = document.querySelector('.result');
+                let xhr = new XMLHttpRequest();
+                let url = "/api/v1/user/registration";
+                xhr.open("POST", url, true);
+                xhr.setRequestHeader("Content-Type", "application/json");
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState === 4 && xhr.status === 200) {
+                        result.innerHTML = "Пользователь зарегистрирован. Вы авторизованы. Главная страница для авторизованного пользователя: http://localhost:8080/api/v1/mainAuthorized";
+                    } else {
+                        result.innerHTML = "Упс, что-то пошло не так...";
+                    }
+                };
+                const data = JSON.stringify({
+                    "email": email.value,
+                    "password": password.value,
+                    "repeatPassword": repeatPassword.value
+                });
+                xhr.send(data);
+            }
+        </script>
+
+    </div>
+</div>
+</body>
+</html>

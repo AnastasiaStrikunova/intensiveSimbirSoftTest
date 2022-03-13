@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Authorization</title>
+</head>
+<body>
+<div class="main">
+    <div class="menu">
+        <h2>Меню</h2>
+        <ul>
+            <li><a href="/api/v1/mainUnauthorized">На главную</a></li>
+            <li><a href="/api/v1/authorization">Авторизация</a></li>
+            <li><a href="/api/v1/registration">Регистрация</a></li>
+        </ul>
+    </div>
+    <div class="content">
+        <form action="/api/v1/authorization" method="post">
+            <p>
+                <label for="username">email: </label>
+                <input type="text" id="username" name="username" placeholder="Email" required>
+            </p>
+            <p>
+                <label for="password">пароль: </label>
+                <input type="password" id="password" name="password" placeholder="Password" required>
+            </p>
+            <button type="submit">Войти</button>
+        </form>
+    </div>
+</div>
+</body>
+</html>

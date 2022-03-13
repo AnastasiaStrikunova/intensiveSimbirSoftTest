@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <title>Add note</title>
+</head>
+<body>
+<div class="main">
+    <div class="menu">
+        <h2>Меню</h2>
+        <ul>
+            <li><a href="/api/v1/mainAuthorized">На главную</a></li>
+            <li><a href="/api/v1/listOfNotes">Список заметок</a></li>
+            <li><a href="/api/v1/addNote">Добавить заметку</a></li>
+
+            <li><form action="/api/v1/logout" method="POST">
+                <button type="submit">Выйти</button>
+            </form></li>
+        </ul>
+    </div>
+    <div class="content">
+        <p>
+            <label>текст заметки: </label>
+            <input type="text" id="text"><br/>
+            <button onclick="sendJSON()">Добавить</button>
+        <p class="result" style="color:blue"></p>
+        </p>
+        <script>
+            function sendJSON() {
+                let text = document.querySelector('#text');
+                let result = document.querySelector('.result');
+                let xhr = new XMLHttpRequest();
+                let url = "/api/v1/note";
+                xhr.open("POST", url, true);
+                xhr.setRequestHeader("Content-Type", "application/json");
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState === 4 && xhr.status === 200) {
+                        result.innerHTML = "Заметка добавлена";
+                    } else {
+                        result.innerHTML = "Упс, что-то пошло не так...";
+                    }
+                };
+                var data = JSON.stringify({ "text": text.value});
+                xhr.send(data);
+            }
+        </script>
+
+    </div>
+</div>
+</body>
+</html>
